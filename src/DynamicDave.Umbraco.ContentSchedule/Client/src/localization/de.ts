@@ -1,0 +1,21 @@
+export default {
+  ddContentSchedule: {
+    title: 'Geplante Inhalte',
+    page: 'Seite',
+    action: 'Aktion',
+    when: 'Datum / Uhrzeit',
+    language: 'Sprache',
+    status: 'Status',
+    publish: 'Veröffentlichen',
+    unpublish: 'Veröffentlichung aufheben',
+    scheduled: 'Geplant',
+    overdue: 'Überfällig',
+    filterToday: 'Heute',
+    filter7: 'Nächste 7 Tage',
+    filter30: 'Nächste 30 Tage',
+    filterOverdue: 'Überfällig / fehlgeschlagen',
+    empty: 'In diesem Zeitraum ist nichts geplant.',
+    loadFailed: 'Der Zeitplan konnte nicht geladen werden.',
+    overdueHint: 'Der geplante Zeitpunkt ist verstrichen, aber die Aktion wurde nicht ausgeführt.',
+  },
+};
