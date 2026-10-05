@@ -13,6 +13,9 @@
     <Product>DynamicDave.Umbraco.ContentSchedule</Product>
     <Title>DynamicDave.Umbraco.ContentSchedule</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/DynamicDave/DynamicDave.Umbraco.ContentSchedule</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DynamicDave/DynamicDave.Umbraco.ContentSchedule</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
 
