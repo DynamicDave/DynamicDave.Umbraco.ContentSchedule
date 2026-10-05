@@ -23,4 +23,17 @@ internal static class ScheduleFilter
                 return false;
         }
     }
+
+    public static ScheduleCountsModel Count(IReadOnlyCollection<DateTime> scheduledUtc, DateTime nowUtc, TimeZoneInfo timeZone)
+    {
+        int CountFor(ScheduleRange range) => scheduledUtc.Count(d => IsInRange(d, nowUtc, range, timeZone));
+
+        return new ScheduleCountsModel
+        {
+            Today = CountFor(ScheduleRange.Today),
+            Next7Days = CountFor(ScheduleRange.Next7Days),
+            Next30Days = CountFor(ScheduleRange.Next30Days),
+            Overdue = CountFor(ScheduleRange.Overdue),
+        };
+    }
 }

@@ -1,21 +1,23 @@
 import { css, html, customElement, state, repeat } from '@umbraco-cms/backoffice/external/lit';
 import { UmbLitElement } from '@umbraco-cms/backoffice/lit-element';
 import { ScheduleItemsService } from './api/index.js';
-import type { ScheduleItemsResponse, ScheduleRange } from './api/index.js';
+import type { ScheduleCountsModel, ScheduleItemsResponse, ScheduleRange } from './api/index.js';
 
 type Item = ScheduleItemsResponse['items'][number];
 
-const FILTERS: Array<{ range: ScheduleRange; key: string }> = [
-  { range: 'Today', key: 'ddContentSchedule_filterToday' },
-  { range: 'Next7Days', key: 'ddContentSchedule_filter7' },
-  { range: 'Next30Days', key: 'ddContentSchedule_filter30' },
-  { range: 'Overdue', key: 'ddContentSchedule_filterOverdue' },
+const FILTERS: Array<{ range: ScheduleRange; key: string; count: keyof ScheduleCountsModel }> = [
+  { range: 'Today', key: 'ddContentSchedule_filterToday', count: 'today' },
+  { range: 'Next7Days', key: 'ddContentSchedule_filter7', count: 'next7Days' },
+  { range: 'Next30Days', key: 'ddContentSchedule_filter30', count: 'next30Days' },
+  { range: 'Overdue', key: 'ddContentSchedule_filterOverdue', count: 'overdue' },
 ];
 
 @customElement('dd-schedule-dashboard')
 export class DdScheduleDashboardElement extends UmbLitElement {
   @state() private _range: ScheduleRange = 'Next7Days';
   @state() private _items: Item[] = [];
+  /** Counts for every filter; refreshed with each request so they stay in sync with the list. */
+  @state() private _counts?: ScheduleCountsModel;
   @state() private _loading = true;
   @state() private _error = false;
 
@@ -38,16 +40,19 @@ export class DdScheduleDashboardElement extends UmbLitElement {
     this._loading = true;
     this._error = false;
     let items: Item[] = [];
+    let counts: ScheduleCountsModel | undefined;
     let failed = false;
     try {
       const { data, error } = await ScheduleItemsService.getScheduleItems({ query: { range: this._range } });
       failed = error !== undefined || data === undefined;
       items = data?.items ?? [];
+      counts = data?.counts;
     } catch {
       failed = true;
     }
     if (requestId !== this.#requestId) return; // stale response
     this._items = failed ? [] : items;
+    this._counts = failed ? undefined : counts;
     this._error = failed;
     this._loading = false;
   }
@@ -62,16 +67,22 @@ export class DdScheduleDashboardElement extends UmbLitElement {
     return `/umbraco/section/content/workspace/document/edit/${key}`;
   }
 
+  #tabLabel(f: (typeof FILTERS)[number]) {
+    const label = this.localize.term(f.key);
+    const count = this._counts?.[f.count];
+    return count === undefined ? label : `${label} (${count})`;
+  }
+
   override render() {
     return html`
       <uui-box headline=${this.localize.term('ddContentSchedule_title')}>
         <uui-tab-group slot="header-actions">
           ${FILTERS.map(
             (f) => html`<uui-tab
-              label=${this.localize.term(f.key)}
+              label=${this.#tabLabel(f)}
               ?active=${this._range === f.range}
               @click=${() => this.#select(f.range)}
-              >${this.localize.term(f.key)}</uui-tab
+              >${this.#tabLabel(f)}</uui-tab
             >`,
           )}
         </uui-tab-group>
