@@ -1,0 +1,9 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "Screenshots": [
+    {
+      "ImageUrl": "https://raw.githubusercontent.com/DynamicDave/DynamicDave.Umbraco.ContentSchedule/main/docs/screenshots/content-schedule-dashboard.png",
+      "Caption": "Dashboard showing content scheduled to publish or unpublish today, in the next 7 and 30 days, and overdue items"
+    }
+  ]
+}
