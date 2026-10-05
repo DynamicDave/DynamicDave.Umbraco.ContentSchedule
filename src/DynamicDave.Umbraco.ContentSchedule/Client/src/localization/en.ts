@@ -1,0 +1,21 @@
+export default {
+  ddContentSchedule: {
+    title: 'Scheduled content',
+    page: 'Page',
+    action: 'Action',
+    when: 'Date / time',
+    language: 'Language',
+    status: 'Status',
+    publish: 'Publish',
+    unpublish: 'Unpublish',
+    scheduled: 'Scheduled',
+    overdue: 'Overdue',
+    filterToday: 'Today',
+    filter7: 'Next 7 days',
+    filter30: 'Next 30 days',
+    filterOverdue: 'Overdue / failed',
+    empty: 'Nothing scheduled in this period.',
+    loadFailed: 'Could not load the schedule.',
+    overdueHint: 'The scheduled time has passed but the action has not been applied.',
+  },
+};

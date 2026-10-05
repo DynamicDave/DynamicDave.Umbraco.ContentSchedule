@@ -1,0 +1,21 @@
+export default {
+  ddContentSchedule: {
+    title: 'Geplande content',
+    page: 'Pagina',
+    action: 'Actie',
+    when: 'Datum / tijd',
+    language: 'Taal',
+    status: 'Status',
+    publish: 'Publiceren',
+    unpublish: 'Depubliceren',
+    scheduled: 'Gepland',
+    overdue: 'Verlopen',
+    filterToday: 'Vandaag',
+    filter7: 'Komende 7 dagen',
+    filter30: 'Komende 30 dagen',
+    filterOverdue: 'Verlopen / mislukt',
+    empty: 'Niets gepland in deze periode.',
+    loadFailed: 'Het schema kon niet worden geladen.',
+    overdueHint: 'Het geplande tijdstip is verstreken maar de actie is niet uitgevoerd.',
+  },
+};

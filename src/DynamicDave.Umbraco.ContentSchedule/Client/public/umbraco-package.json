@@ -1,0 +1,14 @@
+{
+  "id": "DynamicDave.Umbraco.ContentSchedule",
+  "name": "DynamicDave.Umbraco.ContentSchedule",
+  "version": "0.0.0",
+  "allowTelemetry": true,
+  "extensions": [
+    {
+      "name": "Dynamic Dave Umbraco Content Schedule Bundle",
+      "alias": "DynamicDave.Umbraco.ContentSchedule.Bundle",
+      "type": "bundle",
+      "js": "/App_Plugins/DynamicDaveUmbracoContentSchedule/dynamic-dave-umbraco-content-schedule.js"
+    }
+  ]
+}
