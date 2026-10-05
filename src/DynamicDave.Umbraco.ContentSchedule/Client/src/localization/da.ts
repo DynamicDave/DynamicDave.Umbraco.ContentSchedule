@@ -1,0 +1,21 @@
+export default {
+  ddContentSchedule: {
+    title: 'Planlagt indhold',
+    page: 'Side',
+    action: 'Handling',
+    when: 'Dato / tid',
+    language: 'Sprog',
+    status: 'Status',
+    publish: 'Udgiv',
+    unpublish: 'Afpublicér',
+    scheduled: 'Planlagt',
+    overdue: 'Overskredet',
+    filterToday: 'I dag',
+    filter7: 'Næste 7 dage',
+    filter30: 'Næste 30 dage',
+    filterOverdue: 'Overskredet / mislykket',
+    empty: 'Intet planlagt i denne periode.',
+    loadFailed: 'Planen kunne ikke indlæses.',
+    overdueHint: 'Det planlagte tidspunkt er passeret, men handlingen er ikke udført.',
+  },
+};

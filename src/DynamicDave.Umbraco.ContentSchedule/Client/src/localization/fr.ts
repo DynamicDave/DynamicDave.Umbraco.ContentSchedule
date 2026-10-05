@@ -1,0 +1,21 @@
+export default {
+  ddContentSchedule: {
+    title: 'Contenu planifié',
+    page: 'Page',
+    action: 'Action',
+    when: 'Date / heure',
+    language: 'Langue',
+    status: 'Statut',
+    publish: 'Publier',
+    unpublish: 'Dépublier',
+    scheduled: 'Planifié',
+    overdue: 'En retard',
+    filterToday: "Aujourd'hui",
+    filter7: '7 prochains jours',
+    filter30: '30 prochains jours',
+    filterOverdue: 'En retard / échoué',
+    empty: 'Rien de planifié pour cette période.',
+    loadFailed: 'Impossible de charger la planification.',
+    overdueHint: "L'heure planifiée est dépassée mais l'action n'a pas été effectuée.",
+  },
+};
