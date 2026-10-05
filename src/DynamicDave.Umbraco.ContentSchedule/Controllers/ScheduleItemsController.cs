@@ -15,13 +15,13 @@ public class ScheduleItemsController(ScheduleReader reader, IBackOfficeSecurityA
     [HttpGet("items", Name = "GetScheduleItems")]
     [ProducesResponseType<ScheduleItemsResponse>(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IActionResult GetScheduleItems([FromQuery] ScheduleRange range = ScheduleRange.Next7Days)
+    public async Task<IActionResult> GetScheduleItems([FromQuery] ScheduleRange range = ScheduleRange.Next7Days)
     {
         if (!Enum.IsDefined(range)) return BadRequest();
 
         var user = security.BackOfficeSecurity?.CurrentUser;
         if (user is null) return Unauthorized();
 
-        return Ok(reader.Read(range, user, DateTime.UtcNow, TimeZoneInfo.Local));
+        return Ok(await reader.ReadAsync(range, user, DateTime.UtcNow, TimeZoneInfo.Local));
     }
 }
