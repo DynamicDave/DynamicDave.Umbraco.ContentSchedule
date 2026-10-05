@@ -13,8 +13,16 @@ export type ScheduleItemModel = {
     status: string;
 };
 
+export type ScheduleCountsModel = {
+    today: number;
+    next7Days: number;
+    next30Days: number;
+    overdue: number;
+};
+
 export type ScheduleItemsResponse = {
     items: Array<ScheduleItemModel>;
+    counts: ScheduleCountsModel;
 };
 
 export type ScheduleRange = 'Today' | 'Next7Days' | 'Next30Days' | 'Overdue';

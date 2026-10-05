@@ -1,6 +1,6 @@
 # DynamicDave.Umbraco.ContentSchedule
 
-A backoffice dashboard (Content section) that lists all scheduled publish and unpublish actions, with filters for Today, Next 7 days, Next 30 days and Overdue. Click a page name to open it.
+A backoffice dashboard (Content section) that lists all scheduled publish and unpublish actions, with filters for Today, Next 7 days, Next 30 days and Overdue, each showing the number of entries it contains. Click a page name to open it.
 
 ## Install
 

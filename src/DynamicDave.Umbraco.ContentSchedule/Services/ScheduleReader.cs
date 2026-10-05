@@ -9,7 +9,21 @@ namespace DynamicDave.Umbraco.ContentSchedule.Services;
 
 public class ScheduleReader(IContentService contentService, IEntityService entityService, AppCaches appCaches)
 {
-    public IReadOnlyList<ScheduleItemModel> Read(ScheduleRange range, IUser? user, DateTime nowUtc, TimeZoneInfo timeZone)
+    /// <summary>
+    /// Returns the schedule entries in <paramref name="range"/> plus the number of entries in every range,
+    /// so the dashboard can show counts on all filters from a single request.
+    /// </summary>
+    public ScheduleItemsResponse Read(ScheduleRange range, IUser? user, DateTime nowUtc, TimeZoneInfo timeZone)
+    {
+        var all = ReadAll(user, nowUtc);
+        return new ScheduleItemsResponse
+        {
+            Items = all.Where(i => ScheduleFilter.IsInRange(i.ScheduledAt, nowUtc, range, timeZone)).ToList(),
+            Counts = ScheduleFilter.Count(all.Select(i => i.ScheduledAt).ToList(), nowUtc, timeZone),
+        };
+    }
+
+    private List<ScheduleItemModel> ReadAll(IUser? user, DateTime nowUtc)
     {
         if (user is null) return [];
 
@@ -33,8 +47,6 @@ public class ScheduleReader(IContentService contentService, IEntityService entit
             foreach (var entry in entries)
             {
                 var utc = DateTime.SpecifyKind(entry.Date, DateTimeKind.Utc);
-                if (!ScheduleFilter.IsInRange(utc, nowUtc, range, timeZone)) continue;
-
                 items.Add(new ScheduleItemModel
                 {
                     Key = content.Key,

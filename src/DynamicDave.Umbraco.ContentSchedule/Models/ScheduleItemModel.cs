@@ -10,7 +10,16 @@ public sealed class ScheduleItemModel
     public required string Status { get; init; }   // "scheduled" | "overdue"
 }
 
+public sealed class ScheduleCountsModel
+{
+    public required int Today { get; init; }
+    public required int Next7Days { get; init; }
+    public required int Next30Days { get; init; }
+    public required int Overdue { get; init; }
+}
+
 public sealed class ScheduleItemsResponse
 {
     public required IReadOnlyList<ScheduleItemModel> Items { get; init; }
+    public required ScheduleCountsModel Counts { get; init; }
 }

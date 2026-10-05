@@ -22,7 +22,6 @@ public class ScheduleItemsController(ScheduleReader reader, IBackOfficeSecurityA
         var user = security.BackOfficeSecurity?.CurrentUser;
         if (user is null) return Unauthorized();
 
-        var items = reader.Read(range, user, DateTime.UtcNow, TimeZoneInfo.Local);
-        return Ok(new ScheduleItemsResponse { Items = items });
+        return Ok(reader.Read(range, user, DateTime.UtcNow, TimeZoneInfo.Local));
     }
 }
