@@ -4,7 +4,7 @@ Dashboard in the Content section that lists scheduled publishes and unpublishes 
 
 The backoffice UI is localized in English, Dutch, German, French and Danish (`src/DynamicDave.Umbraco.ContentSchedule/Client/src/localization`).
 
-Umbraco 17 backoffice package (`DynamicDave.Umbraco.ContentSchedule`). See [the package README](src/DynamicDave.Umbraco.ContentSchedule/README.md) for what it does, configuration and limitations.
+Umbraco 17 and 18 backoffice package (`DynamicDave.Umbraco.ContentSchedule`). See [the package README](src/DynamicDave.Umbraco.ContentSchedule/README.md) for what it does, configuration and limitations.
 
 ## License
 

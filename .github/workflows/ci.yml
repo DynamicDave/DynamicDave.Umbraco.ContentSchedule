@@ -44,6 +44,11 @@ jobs:
       - name: Pack
         run: dotnet pack src/${{ env.PACKAGE }} -c Release -p:SkipClientBuild=true -p:ContinuousIntegrationBuild=true -o artifacts
 
+      # The package is built against its lowest supported Umbraco version (17.0.0). Also compile it against the
+      # newest supported major, so APIs removed or changed in Umbraco 18 are caught.
+      - name: Build against the newest Umbraco 18
+        run: dotnet build src/${{ env.PACKAGE }} -c Release -p:SkipClientBuild=true "-p:UmbracoVersion=18.*"
+
       # The package is built against its minimum Umbraco version, whose own dependencies may have advisories that
       # sites on a newer 17.x never get. The TestSite installs the package on the latest Umbraco 17, like a real site.
       - name: Check NuGet dependencies for known vulnerabilities
