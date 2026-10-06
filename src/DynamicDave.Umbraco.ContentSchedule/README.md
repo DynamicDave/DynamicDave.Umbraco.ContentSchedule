@@ -6,7 +6,7 @@ A backoffice dashboard (Content section) that lists all scheduled publish and un
 
     dotnet add package DynamicDave.Umbraco.ContentSchedule
 
-Supported Umbraco version: **17.3 or later 17.x** (net10.0). Umbraco 18 is not supported by this version. The backoffice UI is available in English, Dutch, German, French and Danish.
+Supported Umbraco versions: **17.x and 18.x** (net10.0), tested from 17.0.0 up to and including 18.2.1. The backoffice UI is available in English, Dutch, German, French and Danish.
 
 ## Configuration
 

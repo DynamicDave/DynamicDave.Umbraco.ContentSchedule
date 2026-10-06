@@ -11,7 +11,7 @@ namespace DynamicDave.Umbraco.ContentSchedule.Services;
 public class ScheduleReader(
     IContentService contentService,
     IEntityService entityService,
-    IContentPermissionService contentPermissionService,
+    IUserService userService,
     AppCaches appCaches)
 {
     internal const string SnapshotCacheKey = "DynamicDave.ContentSchedule.Snapshot";
@@ -26,9 +26,9 @@ public class ScheduleReader(
     /// Returns the schedule entries in <paramref name="range"/> plus the number of entries in every range,
     /// so the dashboard can show counts on all filters from a single request.
     /// </summary>
-    public async Task<ScheduleItemsResponse> ReadAsync(ScheduleRange range, IUser? user, DateTime nowUtc, TimeZoneInfo timeZone)
+    public ScheduleItemsResponse Read(ScheduleRange range, IUser? user, DateTime nowUtc, TimeZoneInfo timeZone)
     {
-        var all = await ReadAllAsync(user, nowUtc);
+        var all = ReadAll(user, nowUtc);
         return new ScheduleItemsResponse
         {
             Items = all.Where(i => ScheduleFilter.IsInRange(i.ScheduledAt, nowUtc, range, timeZone)).ToList(),
@@ -36,7 +36,7 @@ public class ScheduleReader(
         };
     }
 
-    private async Task<List<ScheduleItemModel>> ReadAllAsync(IUser? user, DateTime nowUtc)
+    private List<ScheduleItemModel> ReadAll(IUser? user, DateTime nowUtc)
     {
         if (user is null) return [];
 
@@ -49,12 +49,11 @@ public class ScheduleReader(
         var inStartNodes = snapshot.Where(d => StartNodeAccess.CanSee(d.Path, startNodes)).ToList();
         if (inStartNodes.Count == 0) return [];
 
-        // Same rule as the content tree: only documents the user's groups may browse.
-        var browsable = await contentPermissionService.FilterAuthorizedAccessAsync(
-            user, inStartNodes.Select(d => d.Key), new HashSet<string> { ActionBrowse.ActionLetter });
-
+        // Same rule as the content tree: only documents the user's groups may browse, with granular permissions
+        // inherited down the path. IContentPermissionService.FilterAuthorizedAccessAsync does this in one query but
+        // only exists from Umbraco 17.3, so the per-path lookup keeps Umbraco 17.0 supported.
         return inStartNodes
-            .Where(d => browsable.Contains(d.Key))
+            .Where(d => userService.GetPermissionsForPath(user, d.Path).GetAllPermissions().Contains(ActionBrowse.ActionLetter))
             .SelectMany(d => d.Entries.Select(e => new ScheduleItemModel
             {
                 Key = d.Key,
@@ -82,14 +81,18 @@ public class ScheduleReader(
             .GroupBy(c => c.Key).Select(g => g.First()).ToList();
         if (candidates.Count == 0) return [];
 
+        // GetContentSchedulesByKeys only exists from Umbraco 17.3. GetContentSchedulesByIds (takes keys, returns the
+        // schedules by int id) exists in every supported version; it is obsolete from 18 and removed in 19.
+#pragma warning disable CS0618
         var schedules = candidates.Select(c => c.Key).Chunk(KeyBatchSize)
-            .SelectMany(contentService.GetContentSchedulesByKeys)
+            .SelectMany(contentService.GetContentSchedulesByIds)
             .ToDictionary(kv => kv.Key, kv => kv.Value);
+#pragma warning restore CS0618
 
         var documents = new List<ScheduledDocument>();
         foreach (var content in candidates)
         {
-            if (!schedules.TryGetValue(content.Key, out var entries)) continue;
+            if (!schedules.TryGetValue(content.Id, out var entries)) continue;
             documents.Add(new ScheduledDocument(content.Key, content.Path, entries.Select(entry => new ScheduledEntry(
                 Name: (entry.Culture is { Length: > 0 } ? content.GetCultureName(entry.Culture) : null) ?? content.Name ?? string.Empty,
                 Action: entry.Action == ContentScheduleAction.Release ? "publish" : "unpublish",

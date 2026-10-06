@@ -9,10 +9,15 @@ using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Api.Management.OpenApi;
 using Umbraco.Cms.Api.Common.OpenApi;
+using Constants = DynamicDave.Umbraco.ContentSchedule.Constants;
 
-namespace DynamicDave.Umbraco.ContentSchedule.Composers
+namespace TestSite.OpenApi
 {
-    public class DynamicDaveUmbracoContentScheduleApiComposer : IComposer
+    // Development only: publishes the package API as its own Swagger document, from which
+    // `npm run generate-client` (see Client/package.json) generates the TypeScript client.
+    // It lives in the TestSite instead of the package because it is built on Swashbuckle SwaggerGen: Umbraco 17
+    // uses that, Umbraco 18 replaced it with Microsoft.AspNetCore.OpenApi, and the package must load on both.
+    public class ContentScheduleOpenApiComposer : IComposer
     {
         public void Compose(IUmbracoBuilder builder)
         {
