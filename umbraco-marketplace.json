@@ -1,5 +1,18 @@
 {
   "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "Title": "Content Schedule",
+  "Category": "Editor Tools",
+  "PackageType": "Package",
+  "LicenseTypes": [
+    "Free"
+  ],
+  "AuthorDetails": {
+    "Name": "'Dynamic' Dave Jonker",
+    "Description": "Umbraco developer from the Netherlands",
+    "Url": "https://github.com/dynamicdave",
+    "ImageUrl": "https://github.com/dynamicdave.png",
+    "SyncContributorsFromRepository": true
+  },
   "Screenshots": [
     {
       "ImageUrl": "https://raw.githubusercontent.com/DynamicDave/DynamicDave.Umbraco.ContentSchedule/main/docs/screenshots/content-schedule-dashboard.png",
