@@ -1,5 +1,4 @@
 {
-  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
   "id": "DynamicDave.Umbraco.ContentSchedule",
   "name": "DynamicDave.Umbraco.ContentSchedule",
   "version": "18.0.2",
@@ -10,7 +9,7 @@
   },
   "extensions": [
     {
-      "name": "ContentSchedule",
+      "name": "Content Schedule",
       "alias": "DynamicDave.Umbraco.ContentSchedule.Bundle",
       "type": "bundle",
       "js": "/App_Plugins/DynamicDaveUmbracoContentSchedule/dynamic-dave-umbraco-content-schedule.js"
