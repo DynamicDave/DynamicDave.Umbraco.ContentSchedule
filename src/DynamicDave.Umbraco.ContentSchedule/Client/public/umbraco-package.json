@@ -2,7 +2,7 @@
   "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
   "id": "DynamicDave.Umbraco.ContentSchedule",
   "name": "DynamicDave.Umbraco.ContentSchedule",
-  "version": "18.0.0",
+  "version": "18.0.1",
   "allowTelemetry": true,
   "AuthorDetails": {
     "Name": "Dynamic Dave",
